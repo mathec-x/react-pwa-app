@@ -1,17 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import ReactPwa, { usePwa } from './lib';
+
+const App = () => {
+  const pwa = usePwa()
+
+  return (<>
+    <p>pwa.isInstalled: <b>{pwa.isInstalled}</b></p>
+    <p>pwa.supportsPWA: <b>{pwa.supportsPWA ? "Sim" : "Não"}</b></p>
+
+    <button onClick={pwa.installApp}>install app</button>
+  </>
+  )
+}
 
 ReactDOM.render(
-  <React.StrictMode>
+  <ReactPwa test config={{
+    swUrl: "/service-worker.js",
+    onUpdate: (reg) => {
+      alert('sw updated');
+      console.log(reg);
+    },
+    onSuccess: (reg) => {
+      alert('sw success installed');
+      console.log(reg);
+    }
+  }}>
     <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+  </ReactPwa>, document.getElementById('root'));
