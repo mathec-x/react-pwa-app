@@ -1,6 +1,6 @@
 {
   "name": "react-pwa-app",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "mathec",
   "license": "ISC",
   "keywords": ["react", "nextjs", "pwa", "add to home screen"],
@@ -24,6 +24,7 @@
   "scripts": {
     "mount": "rd /s /q dist && npm run copy",
     "copy": "npx babel src/lib --out-dir dist --copy-files",
+    "deploy": "npm run copy && npm publish", 
     "start": "set PORT=1111 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
