@@ -4,7 +4,7 @@
 ```
 import  React  from  'react';
 import  ReactDOM  from  'react-dom';
-import  ReactPwa from  'react-pwa';
+import  ReactPwa from  'react-pwa-app';
 
 ReactDOM.render(
 	<ReactPwa 
@@ -27,7 +27,7 @@ ReactDOM.render(
 
 ## in your component 
 ```
-import { usePwa } from  'react-pwa';
+import { usePwa } from  'react-pwa-app';
 
 const App = () => {
 	const  pwa = usePwa()
