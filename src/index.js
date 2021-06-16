@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import ReactPwa, { usePwa } from './lib';
 
 const App = () => {
-  const pwa = usePwa()
+  const pwa = usePwa();
 
   return (<>
     <p>pwa.isInstalled: <b>{pwa.isInstalled}</b></p>
@@ -19,11 +19,10 @@ ReactDOM.render(
     swUrl: "/service-worker.js",
     onUpdate: (reg) => {
       alert('sw updated');
-      console.log(reg);
+      console.log('onUpdatedCallBack', reg);
     },
     onSuccess: (reg) => {
-      alert('sw success installed');
-      console.log(reg);
+      // console.log('onSuccessCallback', reg);
     }
   }}>
     <App />

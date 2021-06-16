@@ -2,6 +2,8 @@
  var urlsToCache = ['/','/styles/styles.css','/script/webpack-bundle.js'];
  var appIcon = 'default_icon_link';
  
+ //array routers on fetch not will cache
+ const uri_black_list = [];
  //https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications#request_permission
  
  const urlB64ToUint8Array = base64String => {
@@ -63,8 +65,8 @@
  
      const response = await fetch(e.request);
  
-     // posts are not allowed to fetch
-     if(e.request.method !== 'POST'){
+     // posts, put, delete are not allowed to cache
+     if(e.request.method === 'GET' && !uri_black_list.includes(e.request.url)){
        console.log(`[Service Worker ${e.request.method}] Caching new resource from ${CACHE_NAME}: ${e.request.url}`);      
        const cache = await caches.open(CACHE_NAME);
        cache.put(e.request, response.clone());
@@ -75,36 +77,36 @@
  
  });
  
- self.addEventListener("push", function (event) {
-   /**@type {{body: string, title: string, icon: string?}} message */
-   const message = event.data.json();
-   console.log(message);
-     var options = {
-       body: message.body,
-       icon: message.icon||appIcon,
-       vibrate: [100, 50, 100],
-       actions: [
-         {
-           action: 'explore',
-           title: 'Explore this new world',
-           icon: message.icon||appIcon
-         },
-         {
-           action: 'close',
-           title: 'Close',
-           icon: message.icon||appIcon
-         },
-       ]
-     };
+//  self.addEventListener("push", function (event) {
+//    /**@type {{body: string, title: string, icon: string?}} message */
+//    const message = event.data.json();
+//    console.log(message);
+//      var options = {
+//        body: message.body,
+//        icon: message.icon||appIcon,
+//        vibrate: [100, 50, 100],
+//        actions: [
+//          {
+//            action: 'explore',
+//            title: 'Explore this new world',
+//            icon: message.icon||appIcon
+//          },
+//          {
+//            action: 'close',
+//            title: 'Close',
+//            icon: message.icon||appIcon
+//          },
+//        ]
+//      };
  
-     event.waitUntil(
-       self.registration.showNotification(message.title, options)
-     );
- });
+//      event.waitUntil(
+//        self.registration.showNotification(message.title, options)
+//      );
+//  });
  
  
- self.addEventListener("notificationclick", function openPushNotification(event) {
-     console.log("Notification click Received.", event.notification.data);
-    event.notification.close();
-   //do something
- });
+//  self.addEventListener("notificationclick", function openPushNotification(event) {
+//      console.log("Notification click Received.", event.notification.data);
+//     event.notification.close();
+//    //do something
+//  });

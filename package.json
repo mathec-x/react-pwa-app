@@ -6,6 +6,7 @@
   "keywords": ["react", "nextjs", "pwa", "add to home screen"],
   "private": false,
   "main": "dist/index.js",
+  "types": "./lib/index.d.ts",
   "module": "dist/index.js",
   "files": ["dist", "README.md"],
   "repository": {
@@ -22,11 +23,10 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "mount": "rd /s /q dist && npm run copy",
+    "build": "rd /s /q dist && npm run copy",
     "copy": "npx babel src/lib --out-dir dist --copy-files",
-    "deploy": "npm run copy && npm publish", 
+    "deploy": "npm run build && npm publish", 
     "start": "set PORT=1111 && react-scripts start",
-    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
