@@ -1,47 +1,33 @@
 import React, { createContext, useState, useEffect } from 'react';
 import * as serviceWorker from './sw.config';
 
-/**@type {React.FC<{test: boolean;config: {  swUrl: string;  onUpdate: (registration: ServiceWorkerRegistration) => void;  onSuccess: (registration: ServiceWorkerRegistration) => void;  onError: () => void;  onOffline: () => void; }}>}*/
+/**@type {React.FC<{test: boolean;config: {  swUrl: string;  onUpdate: (registration: ServiceWorkerRegistration) => void;  onSuccess: (registration: ServiceWorkerRegistration) => void;  onError: () => void;  onOffline: () => void; }}>} --*/
 const ReactPwa = (props) => {
     const [reg, setReg] = useState(false);
 
     useEffect(() => {
-        console.log('ReactPwa');
-
         if (!serviceWorker.isLocalhost || props.test) {
             serviceWorker.register(props.config).then(e => setReg(e));
         }
-
     }, [props]);
 
     return <PwaCtx.Provider value={CreatePWA(reg)} children={props.children} />
-}
+};
 
-/**@type {React.Context<[isInstalled: "web"|"standalone", promptInstall: function, supportsPwa: boolean]>}*/
-export const PwaCtx = createContext();
-
-/**@type {() => {isInstalled: "web" | "standalone";installApp(): void;supportsPWA: boolean}}*/
+/**@returns {{isInstalled: "web" | "standalone";installApp(): void;supportsPWA: boolean}} --*/
 export const usePwa = () => {
     const [isInstalled, installApp, supportsPWA] = React.useContext(PwaCtx);
 
-    return { isInstalled, installApp, supportsPWA };
-}
+    return {
+        isInstalled,
+        installApp,
+        supportsPWA
+    };
+};
 
-/**
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
-**/
+/**@type {React.Context<[isInstalled: "web"|"standalone", promptInstall: function, supportsPwa: boolean]>} --*/ 
+export const PwaCtx = createContext();
 
-
-
-
-/**@type {React.FC<>} */
 const CreatePWA = () => {
 
     /**
@@ -70,19 +56,12 @@ const CreatePWA = () => {
         } catch (error) { console.error('[catch promptInstall]', { error }); }
     };
 
-    function handler(event) {
-        event.preventDefault();
-        console.log('handler');
-        setPromptInstall(event);
-    };
-
-
     React.useEffect(() => {
 
         if ('serviceWorker' in navigator) {
             setSupportsPWA(true);
             window.addEventListener("beforeinstallprompt", setPromptInstall);
-            return () => { window.removeEventListener("beforeinstallprompt", handler); }
+            return () => { window.removeEventListener("beforeinstallprompt"); }
         };
 
     }, []);
@@ -91,7 +70,7 @@ const CreatePWA = () => {
         if (window) {
             if (window.matchMedia('(display-mode: standalone)').matches) setIsInstalled('standalone');
             window.addEventListener('appinstalled', () => setIsInstalled('standalone'));
-            return () => { window.removeEventListener("appinstalled", handler); }
+            return () => { window.removeEventListener("appinstalled"); }
         }
     }, []);
 

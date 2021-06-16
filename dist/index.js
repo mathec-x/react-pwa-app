@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = exports.usePwa = exports.PwaCtx = void 0;
+exports.default = exports.PwaCtx = exports.usePwa = void 0;
 
 require("core-js/modules/web.dom-collections.iterator.js");
 
@@ -15,12 +15,10 @@ function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "functio
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-/**@type {React.FC<{test: boolean;config: {  swUrl: string;  onUpdate: (registration: ServiceWorkerRegistration) => void;  onSuccess: (registration: ServiceWorkerRegistration) => void;  onError: () => void;  onOffline: () => void; }}>}*/
+/**@type {React.FC<{test: boolean;config: {  swUrl: string;  onUpdate: (registration: ServiceWorkerRegistration) => void;  onSuccess: (registration: ServiceWorkerRegistration) => void;  onError: () => void;  onOffline: () => void; }}>} --*/
 const ReactPwa = props => {
   const [reg, setReg] = (0, _react.useState)(false);
   (0, _react.useEffect)(() => {
-    console.log('ReactPwa');
-
     if (!serviceWorker.isLocalhost || props.test) {
       serviceWorker.register(props.config).then(e => setReg(e));
     }
@@ -30,13 +28,8 @@ const ReactPwa = props => {
     children: props.children
   });
 };
-/**@type {React.Context<[isInstalled: "web"|"standalone", promptInstall: function, supportsPwa: boolean]>}*/
+/**@returns {{isInstalled: "web" | "standalone";installApp(): void;supportsPWA: boolean}} --*/
 
-
-const PwaCtx = /*#__PURE__*/(0, _react.createContext)();
-/**@type {() => {isInstalled: "web" | "standalone";installApp(): void;supportsPWA: boolean}}*/
-
-exports.PwaCtx = PwaCtx;
 
 const usePwa = () => {
   const [isInstalled, installApp, supportsPWA] = _react.default.useContext(PwaCtx);
@@ -47,21 +40,12 @@ const usePwa = () => {
     supportsPWA
   };
 };
-/**
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
-**/
-
-/**@type {React.FC<>} */
+/**@type {React.Context<[isInstalled: "web"|"standalone", promptInstall: function, supportsPwa: boolean]>} --*/
 
 
 exports.usePwa = usePwa;
+const PwaCtx = /*#__PURE__*/(0, _react.createContext)();
+exports.PwaCtx = PwaCtx;
 
 const CreatePWA = () => {
   /**
@@ -99,20 +83,12 @@ const CreatePWA = () => {
 
   ;
 
-  function handler(event) {
-    event.preventDefault();
-    console.log('handler');
-    setPromptInstall(event);
-  }
-
-  ;
-
   _react.default.useEffect(() => {
     if ('serviceWorker' in navigator) {
       setSupportsPWA(true);
       window.addEventListener("beforeinstallprompt", setPromptInstall);
       return () => {
-        window.removeEventListener("beforeinstallprompt", handler);
+        window.removeEventListener("beforeinstallprompt");
       };
     }
 
@@ -124,7 +100,7 @@ const CreatePWA = () => {
       if (window.matchMedia('(display-mode: standalone)').matches) setIsInstalled('standalone');
       window.addEventListener('appinstalled', () => setIsInstalled('standalone'));
       return () => {
-        window.removeEventListener("appinstalled", handler);
+        window.removeEventListener("appinstalled");
       };
     }
   }, []);
