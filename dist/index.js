@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = exports.PwaCtx = exports.usePwa = void 0;
 
-require("core-js/modules/web.dom-collections.iterator.js");
+require("core-js/modules/web.dom.iterable.js");
 
 var _react = _interopRequireWildcard(require("react"));
 

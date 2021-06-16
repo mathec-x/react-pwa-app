@@ -1,6 +1,6 @@
 {
   "name": "react-pwa-app",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": "mathec",
   "license": "ISC",
   "keywords": [
@@ -11,7 +11,6 @@
   ],
   "private": false,
   "main": "dist/index.js",
-  "types": "./lib/index.d.ts",
   "module": "dist/index.js",
   "files": [
     "dist",
@@ -25,7 +24,7 @@
     "dev": "set PORT=1111 && react-scripts start",
     "build": "rd /s /q dist && npm run copy",
     "copy": "npx babel src/lib --out-dir dist --copy-files",
-    "deploy": "npm run build && npm publish"
+    "deploy": "npm publish --production"
   },
   "eslintConfig": {
     "extends": [

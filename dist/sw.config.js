@@ -5,13 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.unregister = unregister;
 exports.register = exports.isLocalhost = void 0;
-
-require("core-js/modules/es.promise.js");
-
-require("core-js/modules/web.dom-collections.iterator.js");
-
-require("core-js/modules/web.url.js");
-
 const isLocalhost = Boolean(!process.env.NODE_ENV || process.env.NODE_ENV === 'development');
 /**
  * @param {{swUrl: string, onUpdate: function, onSuccess: function}} config 
