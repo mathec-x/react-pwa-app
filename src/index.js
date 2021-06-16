@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReactPwa, { usePwa } from './lib';
+import ReactPwa, { usePwa } from '../dist';
 
 const App = () => {
   const pwa = usePwa();
