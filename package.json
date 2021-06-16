@@ -1,6 +1,6 @@
 {
   "name": "react-pwa-app",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "mathec",
   "license": "ISC",
   "keywords": ["react", "nextjs", "pwa", "add to home screen"],
