@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import * as serviceWorker from './sw.config';
 
-/**@type {React.FC<{test: boolean;config: {  swUrl: string;  onUpdate: (registration: ServiceWorkerRegistration) => void;  onSuccess: (registration: ServiceWorkerRegistration) => void;  onError: () => void;  onOffline: () => void; }}>} --*/
+/**@type {React.FC<import('.').ReactPwaProps>} --*/
 const ReactPwa = (props) => {
     const [reg, setReg] = useState(false);
 
@@ -61,7 +61,7 @@ const CreatePWA = () => {
         if ('serviceWorker' in navigator) {
             setSupportsPWA(true);
             window.addEventListener("beforeinstallprompt", setPromptInstall);
-            return () => { window.removeEventListener("beforeinstallprompt"); }
+
         };
 
     }, []);
@@ -70,7 +70,7 @@ const CreatePWA = () => {
         if (window) {
             if (window.matchMedia('(display-mode: standalone)').matches) setIsInstalled('standalone');
             window.addEventListener('appinstalled', () => setIsInstalled('standalone'));
-            return () => { window.removeEventListener("appinstalled"); }
+
         }
     }, []);
 

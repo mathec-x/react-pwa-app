@@ -1,7 +1,7 @@
-import React, {Component} from 'react'
+import React from 'react'
 import {render} from 'react-dom'
 
-import ReactPwa, { usePwa } from '../../src';
+import ReactPwa, { usePwa } from '../../lib';
 
 const App = () => {
   const pwa = usePwa();
