@@ -1,7 +1,18 @@
 import React, { createContext, useState, useEffect } from 'react';
 import * as serviceWorker from './sw.config';
 
-/**@type {React.FC<import('.').ReactPwaProps>} --*/
+/**
+ * @type {import('react').FC<{
+ *    test?: boolean;
+ *    config: {
+ *        swUrl: string;
+ *        onUpdate?: (registration: ServiceWorkerRegistration) => void
+ *        onSuccess?: (registration: ServiceWorkerRegistration) => void;
+ *        onError?: () => void;
+ *        onOffline?: () => void;
+ *    }
+ * }>} 
+ */
 const ReactPwa = (props) => {
     const [reg, setReg] = useState(false);
 

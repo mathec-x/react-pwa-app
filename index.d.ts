@@ -9,7 +9,7 @@ export const usePwa: () => {
 export const PwaCtx: Context<[isInstalled: "web" | "standalone", promptInstall: Function, supportsPwa: boolean]>;
 
 export interface ReactPwaProps {
-    test: boolean;
+    test?: boolean;
     config: {
         swUrl: string;
         onUpdate?: (registration: ServiceWorkerRegistration) => void

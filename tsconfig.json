@@ -13,6 +13,6 @@
       // Tipos devem ir neste diretório.
       // Remover isso colocará arquivos .d.ts
       // ao lado dos arquivos .js
-      "outDir": "dist",
+      "outDir": "dist"
     },
   }

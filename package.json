@@ -1,15 +1,13 @@
 {
   "name": "react-pwa-app",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "description": "react-pwa-app React component",
   "main": "lib/index.js",
   "module": "es/index.js",
-  "types": "index.d.ts",
   "files": [
-    "css",
+    "index.d.ts",
     "es",
-    "lib",
-    "umd"
+    "lib"
   ],
   "scripts": {
     "build": "nwb build-react-component",
