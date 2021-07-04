@@ -12,10 +12,10 @@ export interface ReactPwaProps {
     test: boolean;
     config: {
         swUrl: string;
-        onUpdate: (registration: ServiceWorkerRegistration) => void
-        onSuccess: (registration: ServiceWorkerRegistration) => void;
-        onError: () => void;
-        onOffline: () => void;
+        onUpdate?: (registration: ServiceWorkerRegistration) => void
+        onSuccess?: (registration: ServiceWorkerRegistration) => void;
+        onError?: () => void;
+        onOffline?: () => void;
     }
 }
 

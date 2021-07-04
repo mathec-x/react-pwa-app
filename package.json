@@ -1,10 +1,10 @@
 {
   "name": "react-pwa-app",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "react-pwa-app React component",
   "main": "lib/index.js",
   "module": "es/index.js",
-  "types": "src/index.d.ts",
+  "types": "index.d.ts",
   "files": [
     "css",
     "es",
@@ -12,7 +12,7 @@
     "umd"
   ],
   "scripts": {
-    "build": "nwb build-react-component && cp ./src/index.d.ts ./lib && cp ./src/index.d.ts ./es",
+    "build": "nwb build-react-component",
     "clean": "nwb clean-module && nwb clean-demo",
     "prepublishOnly": "npm run build",
     "start": "nwb serve-react-demo",
