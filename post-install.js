@@ -22,7 +22,7 @@ if (!fs.existsSync(publicdir + "/service-worker.js")) {
     fs.copyFileSync(currentdir + "/service-worker.js", publicdir + "/service-worker.js");
 }
 
-if (!fs.lstatSync(publicdir + "/icons")) {
+if (!fs.existsSync(publicdir + "/icons")) {
     fs.mkdirSync(publicdir + "/icons");
 }
 
