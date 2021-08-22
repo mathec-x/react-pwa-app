@@ -21,25 +21,29 @@ const CreatePWA = (registration : ServiceWorkerRegistration|undefined) : UsePwaI
     }
   
     React.useEffect(() => {
-      if ("serviceWorker" in navigator && registration ) {
+      const checkSupport = (e: PromptInstallInterface) => {
+        setPromptInstall(e)
+      }
 
+    if ("serviceWorker" in navigator) {
         setSupports(true);
-
-        window.addEventListener("beforeinstallprompt", (e: PromptInstallInterface) => {
-            setPromptInstall(e)
-        });
-
-        }
+        window.addEventListener("beforeinstallprompt", checkSupport);
+      }
 
     }, [registration]);
   
     React.useEffect(() => {
       if (window) {
-        if (window.matchMedia("(display-mode: standalone)").matches)
+
+        if (window.matchMedia("(display-mode: standalone)").matches){
+          setSupports(true);
           setIsInstalled("standalone");
-        window.addEventListener("appinstalled", () =>
+        }
+
+        window.addEventListener("appinstalled", () => {
+          setSupports(true);
           setIsInstalled("standalone")
-        );
+        });
       }
     }, []);
   

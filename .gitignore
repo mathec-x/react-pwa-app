@@ -1,8 +1,8 @@
 /coverage
 /demo/dist
 /es
-# /lib
-/node_modules
 /umd
+node_modules
 npm-debug.log*
+lib
 yarn.lock
