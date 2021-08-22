@@ -13,7 +13,7 @@ const path = require('path');
 
 
 const publicdir = path.resolve(process.env.INIT_CWD, "public");
-const currentdir = path.resolve(__dirname, "node_modules", "react-pwa-app", "public");
+const currentdir = path.resolve(__dirname, "public");
 
 if (!fs.existsSync(publicdir + "/manifest.webmanifest")) {
     fs.copyFileSync(currentdir + "/manifest.webmanifest", publicdir + "/manifest.webmanifest");
