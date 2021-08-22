@@ -11,7 +11,6 @@
 const fs = require('fs');
 const path = require('path');
 
-
 const publicdir = path.resolve(process.env.INIT_CWD, "public");
 const currentdir = path.resolve(__dirname, "public");
 
@@ -23,19 +22,14 @@ if (!fs.existsSync(publicdir + "/service-worker.js")) {
     fs.copyFileSync(currentdir + "/service-worker.js", publicdir + "/service-worker.js");
 }
 
-var src  = currentdir + '/icons';
-var dest = publicdir + '/icons';
+if (!fs.existsSync(publicdir + "/icons/favicon.ico")) {
+    fs.copyFileSync(currentdir + "/icons/favicon.ico", publicdir + "/icons/favicon.ico");
+}
 
-var exists = fs.existsSync(src);
-var stats = exists && fs.statSync(src);
-var isDirectory = exists && stats.isDirectory();
+if (!fs.existsSync(publicdir + "/icons/logo192.png")) {
+    fs.copyFileSync(currentdir + "/icons/logo192.png", publicdir + "/icons/logo192.png");
+}
 
-if (isDirectory) {
-  fs.mkdirSync(dest);
-  fs.readdirSync(src).forEach(function(childItemName) {
-    copyRecursiveSync(path.join(src, childItemName),
-                      path.join(dest, childItemName));
-  });
-} else {
-  fs.copyFileSync(src, dest);
+if (!fs.existsSync(publicdir + "/icons/logo512.png")) {
+    fs.copyFileSync(currentdir + "/icons/logo512.png", publicdir + "/icons/logo512.png");
 }
