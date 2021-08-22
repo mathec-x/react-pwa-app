@@ -23,7 +23,7 @@ if (!fs.existsSync(publicdir + "/service-worker.js")) {
 }
 
 if (!fs.lstatSync(publicdir + "/icons").isDirectory()) {
-    fs.mkdirSync(publicdir + "/icons/favicon.ico");
+    fs.mkdirSync(publicdir + "/icons");
 }
 
 if (!fs.existsSync(publicdir + "/icons/favicon.ico")) {
