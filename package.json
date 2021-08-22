@@ -37,6 +37,8 @@
     "@types/node": "^16.7.1"
   },
   "files": [
-    "/lib"
+    "/lib",
+    "/public",
+    "/post-install.js"
   ]
 }
