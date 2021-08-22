@@ -11,6 +11,12 @@ yarn add react-pwa-app
 
 ### usage:
 
+- add in root index.html this line
+
+```html
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.webmanifest" />
+```
+
 ```js
 import React from "react";
 import ReactDOM from "react-dom";
