@@ -22,3 +22,20 @@ if (!fs.existsSync(publicdir + "/manifest.webmanifest")) {
 if (!fs.existsSync(publicdir + "/service-worker.js")) {
     fs.copyFileSync(currentdir + "/service-worker.js", publicdir + "/service-worker.js");
 }
+
+var src  = currentdir + '/icons';
+var dest = publicdir + '/icons';
+
+var exists = fs.existsSync(src);
+var stats = exists && fs.statSync(src);
+var isDirectory = exists && stats.isDirectory();
+
+if (isDirectory) {
+  fs.mkdirSync(dest);
+  fs.readdirSync(src).forEach(function(childItemName) {
+    copyRecursiveSync(path.join(src, childItemName),
+                      path.join(dest, childItemName));
+  });
+} else {
+  fs.copyFileSync(src, dest);
+}
