@@ -1,4 +1,4 @@
 import React from "react";
-import { PwaContextInterface } from "./types";
-export declare const PwaCtx: React.Context<PwaContextInterface>;
-export declare const usePwa: () => PwaContextInterface;
+import { UsePwaInterface } from "./types";
+export declare const PwaCtx: React.Context<UsePwaInterface>;
+export declare const usePwa: () => UsePwaInterface;

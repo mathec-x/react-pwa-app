@@ -1,7 +1,13 @@
 import React from "react";
-import { PwaContextInterface } from "./types";
+import { UsePwaInterface } from "./types";
 
-const PwaInstance: PwaContextInterface = [undefined, () => void 0, false];
+const PwaInstance: UsePwaInterface =  {
+    isInstalled: undefined,
+    install: () => {
+        window.location.reload()
+    },
+    supports: false,
+};
 
-export const PwaCtx = React.createContext<PwaContextInterface>(PwaInstance);
+export const PwaCtx = React.createContext<UsePwaInterface>(PwaInstance);
 export const usePwa = () => React.useContext(PwaCtx);

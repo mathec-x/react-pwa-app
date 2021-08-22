@@ -1,9 +1,9 @@
 import { FC } from "react";
 
-export declare const usePwa: () => {
-  isInstalled: "web" | "standalone";
-  installApp(): void;
-  supportsPWA: boolean;
+export interface UsePwaInterface {
+  isInstalled?: "web" | "standalone";
+  install(evt?: Event): void;
+  supports: boolean;
 };
 
 export interface ConfigProps {
@@ -13,12 +13,6 @@ export interface ConfigProps {
   onError?: () => void;
   onOffline?: () => void;
 }
-
-export type PwaContextInterface = [
-  isInstalled: "web" | "standalone" | undefined,
-  promptInstall: (evt?: Event) => void,
-  supportsPwa: boolean
-];
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: String[];

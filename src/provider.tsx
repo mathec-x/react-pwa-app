@@ -1,13 +1,13 @@
 import React, { useState, useEffect, FC } from "react";
 import { PwaCtx } from "./context";
 import * as serviceWorker from "./sw.config";
-import { PromptInstallInterface, PwaContextInterface, ReactPwaProps } from "./types";
+import { PromptInstallInterface, ReactPwaProps, UsePwaInterface } from "./types";
 
-const CreatePWA = (registration : ServiceWorkerRegistration|undefined) : PwaContextInterface => {
+const CreatePWA = (registration : ServiceWorkerRegistration|undefined) : UsePwaInterface => {
     const [promptInstall, setPromptInstall] = useState<PromptInstallInterface>();
 
     const [isInstalled, setIsInstalled] = useState<"web" | "standalone" | undefined>();
-    const [supportsPWA, setSupportsPWA] = useState(false);
+    const [supports, setSupports] = useState(false);
   
     const onClickInstall = (evt?: Event) : void => {
       try {
@@ -23,7 +23,7 @@ const CreatePWA = (registration : ServiceWorkerRegistration|undefined) : PwaCont
     React.useEffect(() => {
       if ("serviceWorker" in navigator && registration ) {
 
-        setSupportsPWA(true);
+        setSupports(true);
 
         window.addEventListener("beforeinstallprompt", (e: PromptInstallInterface) => {
             setPromptInstall(e)
@@ -43,11 +43,11 @@ const CreatePWA = (registration : ServiceWorkerRegistration|undefined) : PwaCont
       }
     }, []);
   
-    return [
-        isInstalled, 
-        onClickInstall, 
-        supportsPWA
-    ];
+    return {
+      install: onClickInstall, 
+      supports,
+      isInstalled 
+    };
   };
 
 
