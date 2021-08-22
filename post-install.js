@@ -22,6 +22,10 @@ if (!fs.existsSync(publicdir + "/service-worker.js")) {
     fs.copyFileSync(currentdir + "/service-worker.js", publicdir + "/service-worker.js");
 }
 
+if (!fs.existsSync(publicdir + "/icons")) {
+    fs.mkdirSync(publicdir + "/icons/favicon.ico");
+}
+
 if (!fs.existsSync(publicdir + "/icons/favicon.ico")) {
     fs.copyFileSync(currentdir + "/icons/favicon.ico", publicdir + "/icons/favicon.ico");
 }
