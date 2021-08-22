@@ -9,13 +9,17 @@ or
 yarn add react-pwa-app
 ``` 
 
-### usage:
-
 - add in root index.html this line
 
 ```html
     <link rel="manifest" href="%PUBLIC_URL%/manifest.webmanifest" />
 ```
+
+## manifest
+
+- put all your icons inside /public/icons and enter them with their respective sizes in public/manifest.webmanifest
+
+### usage:
 
 ```js
 import React from "react";
