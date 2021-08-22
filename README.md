@@ -61,9 +61,9 @@ const App = () => {
         pwa.isInstalled: <b>{pwa.isInstalled}</b>
       </p>
       <p>
-        pwa.supportsPWA: <b>{pwa.supportsPWA ? "Sim" : "Não"}</b>
+        pwa.supportsPWA: <b>{pwa.supports ? "Sim" : "Não"}</b>
       </p>
-      <button onClick={pwa.installApp}>install app</button>
+      <button onClick={pwa.install}>install app</button>
     </>
   );
 };
