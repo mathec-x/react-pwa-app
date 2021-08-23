@@ -71,8 +71,32 @@ const App = () => {
 
 ## Some tips
 
-1.  you need a service worker in the public folder
-2.  you need a manifest.webmanifest in the public folder
+1.  service worker will be generated in the public folder
+
+2.  manifest.webmanifest will be generated in the public folder
+
 3.  service-worker.js needs at least 3 simple configurations. addEventListener('install' | 'activate' | 'fetch' )
+
 4.  you can add pushnotifications support using addEventListener('push' )
+
 5.  to get started use my service-worker.js inside /public
+
+6.  post-install.js will be generated on root folder, you can use on create-react-app
+
+## postbuild
+
+add script postbuild,
+
+```json
+"scripts": {
+  "postbuild": "node post-build.js"
+}
+```
+
+this will help you auto-generate the application build routes, and also a new cachename to update the front whenever you update the app to a new version.
+
+```bash
+yarn add -D glob
+```
+
+you need to install glob to auto generate or customize this file
