@@ -11,8 +11,8 @@
 const fs = require('fs');
 const path = require('path');
 
-if (!fs.existsSync(process.env.INIT_CWD + "/post-build,js")) {
-    fs.copyFileSync(__dirname + "/post-build,js", process.env.INIT_CWD + "/post-build,js");
+if (!fs.existsSync(process.env.INIT_CWD + "/post-build.js")) {
+    fs.copyFileSync(__dirname + "/post-build.js". process.env.INIT_CWD + "/post-build.js");
 }
 
 const publicdir = path.resolve(process.env.INIT_CWD, "public");
