@@ -1,6 +1,6 @@
 {
   "name": "react-pwa-app",
-  "version": "2.0.3",
+  "version": "2.1.1",
   "description": "react-pwa-app React component",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
@@ -40,6 +40,7 @@
   "files": [
     "/lib",
     "/public",
-    "/post-install.js"
+    "/post-install.js",
+    "/post-build.js"
   ]
 }

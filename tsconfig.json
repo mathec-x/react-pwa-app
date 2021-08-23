@@ -17,6 +17,6 @@
     "suppressImplicitAnyIndexErrors": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": ["src", "post-install.js"],
+  "include": ["src", "post-install.js", "post-build.js"],
   "exclude": ["node_modules", "lib"]
 }
