@@ -1,28 +1,29 @@
+/* eslint-disable no-restricted-globals */
 const CACHE_NAME = '@cacheName';
 const urlsToCache = ['/', '/styles/styles.css', '/script/webpack-bundle.js'];
-const appIcon = 'default_icon_link';
+// const appIcon = 'default_icon_link';
 
 // array routers on fetch not will cache
-const uri_black_list = [];
+// const uri_black_list = [];
 // https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications#request_permission
 
-const urlB64ToUint8Array = (base64String) => {
-  const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
-  const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
-  const rawData = atob(base64);
-  const outputArray = new Uint8Array(rawData.length);
-  for (let i = 0; i < rawData.length; ++i) {
-    outputArray[i] = rawData.charCodeAt(i);
-  }
-  return outputArray;
-};
+// const urlB64ToUint8Array = (base64String) => {
+//   const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
+//   const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
+//   const rawData = atob(base64);
+//   const outputArray = new Uint8Array(rawData.length);
+//   for (let i = 0; i < rawData.length; ++i) {
+//     outputArray[i] = rawData.charCodeAt(i);
+//   }
+//   return outputArray;
+// };
 
-const SubscriptionOptions = {
-  applicationServerKey: urlB64ToUint8Array(
-    'get_public_key_on_firebase',
-  ),
-  userVisibleOnly: true,
-};
+// const SubscriptionOptions = {
+//   applicationServerKey: urlB64ToUint8Array(
+//     'get_public_key_on_firebase',
+//   ),
+//   userVisibleOnly: true,
+// };
 
 self.addEventListener('install', (event) => {
   event.waitUntil(

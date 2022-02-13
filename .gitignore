@@ -5,4 +5,6 @@
 node_modules
 npm-debug.log*
 lib
+build
 yarn.lock
+package-lock.json

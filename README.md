@@ -1,4 +1,7 @@
 # ReactPwa light e simple
+- v2 Minor released now!
+- build using rollup
+- 
 ## install
 ```bash
 npm install react-pwa-app
@@ -24,20 +27,38 @@ yarn add react-pwa-app
 ```js
 import React from "react";
 import ReactDOM from "react-dom";
-import { ReactPwa } from "react-pwa-app";
+import ReactPwa from "react-pwa-app";
 
 ReactDOM.render(
   <ReactPwa
     test //is to install in localhost, not required
+    suspense={<>
+      a preloader to load the service worker in the application 
+      is the best way to not overload with component calls.
+      this ensures that the rest of the application only loads after the sw is checked
+      default is children
+    </>}
     config={{
-      swUrl: "/service-worker.js", // sw file in public
+      swUrl: "/service-worker.js", // sw file in public default is service-worker.js
       onUpdate: (reg) => {
-        alert("sw updated");
+        alert("sw cache was updated");
         console.log(reg);
       },
       onSuccess: (reg) => {
         alert("sw success installed");
         console.log(reg);
+      },
+      onError: (reg) => {
+        alert("sw error to install");
+        console.log(reg);
+      },
+      onPrompt:(e) => {
+        if(e.outcome === 'accepted'){
+          console.log('user click on install and accept')
+        }
+        if(e.outcome === 'dismissed'){
+          console.log('user click on install and refuse')
+        }
       },
     }}
   >
@@ -54,6 +75,8 @@ import { usePwa } from "react-pwa-app";
 
 const App = () => {
   const pwa = usePwa();
+
+  console.log(pwa.registration); // ServiceWorkerRegistration
 
   return (
     <>

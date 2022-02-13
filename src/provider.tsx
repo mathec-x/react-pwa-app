@@ -1,71 +1,103 @@
-import React, { useState, useEffect, FC } from "react";
-import { PwaCtx } from "./context";
-import * as serviceWorker from "./sw.config";
-import { PromptInstallInterface, ReactPwaProps, UsePwaInterface } from "./types";
+import { useCallback, useEffect, useState } from "react";
+import { isLocalhost, register } from "./sw.config";
+import { PromptInstallInterface, ReactPwaProps } from "./types";
 
-const CreatePWA = (registration : ServiceWorkerRegistration|undefined) : UsePwaInterface => {
-    const [promptInstall, setPromptInstall] = useState<PromptInstallInterface>();
+export default function useRegistration(props: ReactPwaProps): any {
+  const [registration, setRegistration] = useState<ServiceWorkerRegistration>();
+  const [promptInstall, setPromptInstall] = useState<PromptInstallInterface>();
+  const [isInstalled, setIsInstalled] = useState<"web" | "standalone" | "none">();
+  const [supports, setSupports] = useState<Boolean>();
+  const [done, setDone] = useState(false);
 
-    const [isInstalled, setIsInstalled] = useState<"web" | "standalone" | undefined>();
-    const [supports, setSupports] = useState(false);
-  
-    const onClickInstall = (evt?: Event) : void => {
-      try {
-        if (evt && evt.preventDefault) {
-          evt.preventDefault();
-        }  
-        promptInstall?.prompt();
-      } catch (error) {
-        console.error("[catch promptInstall]", { error });
-      }
+  useEffect(() => {
+    const handler = () => {
+      let debounce: any;
+      register(props.config)
+        .then((regis) => {
+          setRegistration(regis as ServiceWorkerRegistration);
+        })
+        .catch((err) => {
+          if (props?.config?.onError) {
+            setSupports(false);
+            return props.config.onError(err);
+          }
+        })
+        .finally(() => {
+          if (debounce) clearTimeout(debounce);
+          debounce = setTimeout(() => {
+            setDone(true);
+          }, 355);
+        })
     }
-  
-    React.useEffect(() => {
-      const checkSupport = (e: PromptInstallInterface) => {
-        setPromptInstall(e)
-      }
+    if (window && (!isLocalhost() || props.test)) {
+      handler();
+    }
+  }, []);
 
-    if ("serviceWorker" in navigator) {
+  useEffect(() => {
+
+    const checkSupport = (e: PromptInstallInterface) => {
+      setPromptInstall(e);
+
+      // if(e?.prompt){
+      //   setPromptInstall(e);
+      // } else {
+      //   setSupports(false);
+      // }
+    }
+
+    const appInstalled = () => {
+      setDone(true);
+      setSupports(true);
+      setIsInstalled("standalone");
+    }
+
+    if (typeof window !== undefined && registration) {
+      if ("serviceWorker" in navigator) {
+        setIsInstalled("none");
         setSupports(true);
         window.addEventListener("beforeinstallprompt", checkSupport);
       }
 
-    }, [registration]);
-  
-    React.useEffect(() => {
-      if (window) {
-
-        if (window.matchMedia("(display-mode: standalone)").matches){
-          setSupports(true);
-          setIsInstalled("standalone");
-        }
-
-        window.addEventListener("appinstalled", () => {
-          setSupports(true);
-          setIsInstalled("standalone")
-        });
+      if (window.matchMedia("(display-mode: standalone)").matches) {
+        appInstalled();
       }
-    }, []);
-  
-    return {
-      install: onClickInstall, 
-      supports,
-      isInstalled 
-    };
-  };
 
-
-export const ReactPwa : FC<ReactPwaProps> = (props) => {
-  const [registration, setRegistration] = useState<ServiceWorkerRegistration|undefined>();
-
-  useEffect(() => {
-    if (!serviceWorker.isLocalhost || props.test) {
-      serviceWorker.register(props.config).then((e: ServiceWorkerRegistration) => setRegistration(e));
+      window.addEventListener("appinstalled", appInstalled);
     }
-  }, [props]);
 
-  return <PwaCtx.Provider value={CreatePWA(registration)} children={props.children} />;
+    return () => {
+      if (typeof window !== undefined) {
+        window.removeEventListener("beforeinstallprompt", checkSupport);
+        window.removeEventListener("appinstalled", appInstalled);
+      }
+    }
+  }, [registration]);
+
+  const onClickInstall = useCallback((evt?: Event) => {
+    if (evt && evt.preventDefault) {
+      evt.preventDefault();
+    }
+
+    promptInstall?.prompt()
+      .then((e: any) => {
+        if (props?.config?.onPrompt) {
+          return props.config.onPrompt(e);
+        }
+      })
+      .catch((e: any) => {
+        if (props?.config?.onPrompt) {
+          return props.config.onPrompt(e);
+        }
+      })
+
+  }, [promptInstall])
+
+  return {
+    install: onClickInstall,
+    supports,
+    isInstalled,
+    registration,
+    done
+  };
 };
-
-
-export default ReactPwa;
