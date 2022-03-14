@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { isLocalhost, register } from "./sw.config";
+import { register } from "./sw.config";
 import { PromptInstallInterface, ReactPwaProps } from "./types";
 
 export default function useRegistration(props: ReactPwaProps): any {
@@ -9,9 +9,17 @@ export default function useRegistration(props: ReactPwaProps): any {
   const [supports, setSupports] = useState<Boolean>();
   const [done, setDone] = useState(false);
 
+  let debounce: any;
   useEffect(() => {
+  
+    const handleFinally = () => {
+      if (debounce) clearTimeout(debounce);
+      debounce = setTimeout(() => {
+        setDone(true);
+      }, 355);
+    }
+    
     const handler = () => {
-      let debounce: any;
       register(props.config)
         .then((regis) => {
           setRegistration(regis as ServiceWorkerRegistration);
@@ -22,28 +30,17 @@ export default function useRegistration(props: ReactPwaProps): any {
             return props.config.onError(err);
           }
         })
-        .finally(() => {
-          if (debounce) clearTimeout(debounce);
-          debounce = setTimeout(() => {
-            setDone(true);
-          }, 355);
-        })
+        .finally(handleFinally)
     }
-    if (window && (!isLocalhost() || props.test)) {
+    if (typeof window !== 'undefined') {
       handler();
     }
-  }, []);
+  }, [props]);
 
   useEffect(() => {
 
     const checkSupport = (e: PromptInstallInterface) => {
       setPromptInstall(e);
-
-      // if(e?.prompt){
-      //   setPromptInstall(e);
-      // } else {
-      //   setSupports(false);
-      // }
     }
 
     const appInstalled = () => {
@@ -52,7 +49,7 @@ export default function useRegistration(props: ReactPwaProps): any {
       setIsInstalled("standalone");
     }
 
-    if (typeof window !== undefined && registration) {
+    if (typeof window !== undefined) {
       if ("serviceWorker" in navigator) {
         setIsInstalled("none");
         setSupports(true);

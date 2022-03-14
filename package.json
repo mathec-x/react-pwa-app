@@ -1,6 +1,6 @@
 {
   "name": "react-pwa-app",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "react-pwa-app React component",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
